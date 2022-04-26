@@ -26,6 +26,7 @@ public class Principal {
 		af.exibirDado();
 
 		av.adicionarVendas();
+		
 		// av.exibirDado();
 
 		// av.vendasPorVendedor("Jorge Carvalho").forEach(System.out::println);

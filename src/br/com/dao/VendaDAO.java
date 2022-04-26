@@ -5,7 +5,6 @@ import static java.util.Objects.isNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import br.com.exception.VendaException;
 import br.com.model.Funcionario;
@@ -23,7 +22,7 @@ public class VendaDAO {
 	public VendaDAO() {
 	}
 
-	public static void addVenda(Venda venda) throws VendaException {
+	public static void addVenda(Venda venda, Funcionario funcionario) throws VendaException {
 		if (isNull(vendas)) {
 			vendas = new ArrayList<Venda>();
 		}
@@ -33,6 +32,7 @@ public class VendaDAO {
 		}
 
 		vendas.add(venda);
+		funcionario.getVendas().add(venda);
 		System.out.println("Venda adicionada com sucesso");
 	}
 
@@ -57,21 +57,6 @@ public class VendaDAO {
 		return getVendas().get(index);
 	}
 
-	public static List<Venda> vendasByFuncionario(Funcionario funcionario) {
-		if (getVendas().isEmpty())
-			throw new VendaException("A lista de vendas está vazia!");
-
-		return getVendas().stream().filter(venda -> venda.verificarSeOsVendedoresSaoIguais(funcionario))
-				.collect(Collectors.toList());
-	}
-
-	public static List<Venda> vendasByFuncionario(String nome) {
-		if (getVendas().isEmpty())
-			throw new VendaException("A lista de vendas está vazia!");
-
-		return getVendas().stream().filter(venda -> venda.verificarSeOsVendedoresSaoIguais(nome))
-				.collect(Collectors.toList());
-	}
 
 	public static void setVendas(List<Venda> vendas) {
 		VendaDAO.vendas = vendas;

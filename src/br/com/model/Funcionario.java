@@ -1,7 +1,11 @@
 package br.com.model;
 
+import static java.util.Objects.isNull;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.com.util.DataUtil;
 
@@ -17,23 +21,26 @@ public class Funcionario {
 	private String nomeDoFuncionario;
 	private Cargo cargoDoFuncionario;
 	private Date dataDaContratacao;
+	private List<Venda> vendas;
 
 	public Funcionario() {
 	}
 
 	/**
-	 * 
 	 * Construtor com paramentros para inicializar o objeto.
 	 * 
 	 * @param nomeDoFuncionario
 	 * @param cargoDoFuncionario
 	 * @param dataDaContratacao
+	 * @param vendas
 	 */
-	public Funcionario(String nomeDoFuncionario, Cargo cargoDoFuncionario, Date dataDaContratacao) {
+
+	public Funcionario(String nomeDoFuncionario, Cargo cargoDoFuncionario, Date dataDaContratacao, List<Venda> vendas) {
 		super();
 		this.nomeDoFuncionario = nomeDoFuncionario;
 		this.cargoDoFuncionario = cargoDoFuncionario;
 		this.dataDaContratacao = dataDaContratacao;
+		this.vendas = vendas;
 	}
 
 	public String getNomeDoFuncionario() {
@@ -58,6 +65,20 @@ public class Funcionario {
 
 	public void setDataDaContratacao(Date dataDaContratacao) {
 		this.dataDaContratacao = dataDaContratacao;
+	}
+
+	public List<Venda> getVendas() {
+		if (isNull(vendas))
+			vendas = new ArrayList<>();
+		return vendas;
+	}
+
+	public void setVendas(List<Venda> vendas) {
+		this.vendas = vendas;
+	}
+
+	public void adicionarVendaAoFuncionario(Venda venda) {
+
 	}
 
 	/**
@@ -87,17 +108,15 @@ public class Funcionario {
 	public BigDecimal getValorDoSalarioComBeneficio() {
 		return this.cargoDoFuncionario.getValorDoSalarioComBeneficio();
 	}
-	
+
 	/**
-	 * Metódo para retornar o valor total do beneficio do
-	 * funcionario.
+	 * Metódo para retornar o valor total do beneficio do funcionario.
 	 * 
 	 * @return
 	 */
 	public BigDecimal getValorDoBeneficio() {
 		return this.cargoDoFuncionario.getValorDoBeneficio();
 	}
-
 
 	/**
 	 * Metódo para calcular o valor que o funcionário irá receber com base no tempo
@@ -142,8 +161,7 @@ public class Funcionario {
 	public boolean verificarSeOsNomesSaoIguais(String nome) {
 		return this.nomeDoFuncionario.equalsIgnoreCase(nome);
 	}
-	
-	
+
 	/**
 	 * 
 	 * Metódo para a calcular o valor total que o funcionario irá receber no mes
@@ -162,6 +180,7 @@ public class Funcionario {
 		result = prime * result + ((cargoDoFuncionario == null) ? 0 : cargoDoFuncionario.hashCode());
 		result = prime * result + ((dataDaContratacao == null) ? 0 : dataDaContratacao.hashCode());
 		result = prime * result + ((nomeDoFuncionario == null) ? 0 : nomeDoFuncionario.hashCode());
+		result = prime * result + ((vendas == null) ? 0 : vendas.hashCode());
 		return result;
 	}
 
@@ -188,6 +207,11 @@ public class Funcionario {
 			if (other.nomeDoFuncionario != null)
 				return false;
 		} else if (!nomeDoFuncionario.equals(other.nomeDoFuncionario))
+			return false;
+		if (vendas == null) {
+			if (other.vendas != null)
+				return false;
+		} else if (!vendas.equals(other.vendas))
 			return false;
 		return true;
 	}

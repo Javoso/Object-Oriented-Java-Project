@@ -16,15 +16,7 @@ public class VerificadorUtil {
 
 	public static BigDecimal retornarOValorTotalPagoDeSalarioComBeneficioNoMes(List<Funcionario> funcionarios,
 			Date dataMes) {
-
-		funcionarios.forEach(fun -> {
-			System.err.println(fun.getNomeDoFuncionario());
-			System.err.println(fun.getCargoDoFuncionario().valorDoAnoDeServicoEmMes());
-			System.err.println(fun.valorTotalAReceberPorMes());
-		});
 		
-		
-
 		return funcionarios.stream().map(Funcionario::valorTotalAReceber).reduce(BigDecimal.ZERO,
 				BigDecimal::add);
 	}

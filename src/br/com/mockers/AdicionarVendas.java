@@ -3,8 +3,6 @@ package br.com.mockers;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import br.com.builder.VendaBuilder;
 import br.com.model.Funcionario;
 import br.com.model.Venda;
@@ -26,48 +24,57 @@ public class AdicionarVendas {
 
 	public void adicionarVendas() {
 
-		service.adicionarVenda(new VendaBuilder()
-				.vendaComDataDeCompra(DataUtil.createDateMesAno(JOptionPane.showInputDialog("Adicione data da venda?")))
-				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva")).vendaComValor(new BigDecimal(5200))
-				.getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("01/2022"))
+						.vendaComValor(new BigDecimal(5200)).getNovoVenda(),
+				funcionarioService.findByFuncionario("Ana Silva"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("01/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva")).vendaComValor(new BigDecimal(4000))
-				.getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("01/2022"))
+						.vendaComValor(new BigDecimal(4000)).getNovoVenda(),
+				funcionarioService.findByFuncionario("Ana Silva"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("02/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva")).vendaComValor(new BigDecimal(4200))
-				.getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("02/2022"))
+						.vendaComValor(new BigDecimal(4200)).getNovoVenda(),
+				funcionarioService.findByFuncionario("Ana Silva"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("03/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva")).vendaComValor(new BigDecimal(5850))
-				.getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("03/2022"))
+						.vendaComValor(new BigDecimal(5850)).getNovoVenda(),
+				funcionarioService.findByFuncionario("Ana Silva"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("04/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva")).vendaComValor(new BigDecimal(7000))
-				.getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("04/2022"))
+						.vendaComValor(new BigDecimal(7000)).getNovoVenda(),
+				funcionarioService.findByFuncionario("Ana Silva"));
 
 		// ===========================================================================================
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("12/2021"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
-				.vendaComValor(new BigDecimal(3400)).getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("12/2021"))
+						.vendaComValor(new BigDecimal(3400)).getNovoVenda(),
+				funcionarioService.findByFuncionario("João Mendes"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("01/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
-				.vendaComValor(new BigDecimal(7700)).getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("01/2022"))
+						.vendaComValor(new BigDecimal(7700)).getNovoVenda(),
+				funcionarioService.findByFuncionario("João Mendes"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("02/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
-				.vendaComValor(new BigDecimal(5000)).getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("02/2022"))
+						.vendaComValor(new BigDecimal(5000)).getNovoVenda(),
+				funcionarioService.findByFuncionario("João Mendes"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("03/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
-				.vendaComValor(new BigDecimal(5900)).getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("03/2022"))
+						.vendaComValor(new BigDecimal(5900)).getNovoVenda(),
+				funcionarioService.findByFuncionario("João Mendes"));
 
-		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("04/2022"))
-				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
-				.vendaComValor(new BigDecimal(6500)).getNovoVenda());
+		service.adicionarVenda(
+				new VendaBuilder().vendaComDataDeCompra(DataUtil.createDateMesAno("04/2022"))
+						.vendaComValor(new BigDecimal(6500)).getNovoVenda(),
+				funcionarioService.findByFuncionario("João Mendes"));
 
 	}
 
@@ -76,11 +83,11 @@ public class AdicionarVendas {
 	}
 
 	public List<Venda> vendasPorFuncionario(Funcionario vendedor) {
-		return service.vendaByFuncionario(vendedor);
+		return funcionarioService.findByFuncionario(vendedor).getVendas();
 	}
 
 	public List<Venda> vendasPorVendedor(String vendedor) {
-		return service.vendaByVendedor(vendedor);
+		return funcionarioService.findByFuncionario(vendedor).getVendas();
 	}
 
 }

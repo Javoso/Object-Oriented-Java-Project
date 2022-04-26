@@ -17,12 +17,12 @@ public class VendaService implements Serializable {
 
 	private static final long serialVersionUID = 3890870251973431394L;
 
-	public static List<Venda> getVendas() {
+	public List<Venda> getVendas() {
 		return VendaDAO.getVendas();
 	}
 
-	public void adicionarVenda(Venda venda) {
-		VendaDAO.addVenda(venda);
+	public void adicionarVenda(Venda venda, Funcionario funcionario) {
+		VendaDAO.addVenda(venda, funcionario);
 	}
 
 	public void listarVendas() {
@@ -31,14 +31,6 @@ public class VendaService implements Serializable {
 
 	public Venda findByVenda(int index) {
 		return VendaDAO.findByVenda(index);
-	}
-
-	public List<Venda> vendaByFuncionario(Funcionario funcionario) {
-		return VendaDAO.vendasByFuncionario(funcionario);
-	}
-
-	public List<Venda> vendaByVendedor(String nome) {
-		return VendaDAO.vendasByFuncionario(nome);
 	}
 
 }

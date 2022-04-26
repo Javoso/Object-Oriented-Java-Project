@@ -57,6 +57,13 @@ public class FuncionarioDAO {
 		return getFuncionarios().get(index);
 	}
 
+	public static Funcionario findByFuncionario(Funcionario funcionario) {
+		if (getFuncionarios().isEmpty())
+			throw new FuncionarioException("A lista de funcionarios está vazia!");
+
+		return getFuncionarios().get(getFuncionarios().indexOf(funcionario));
+	}
+
 	public static Funcionario findByFuncionario(String nome) {
 		if (getFuncionarios().isEmpty())
 			throw new FuncionarioException("A lista de funcionarios está vazia!");

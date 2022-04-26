@@ -16,7 +16,6 @@ public class Venda {
 
 	private BigDecimal valorDaVenda;
 	private Date dataDaVenda;
-	private Funcionario vendedor;
 
 	public Venda() {
 	}
@@ -49,22 +48,6 @@ public class Venda {
 
 	public void setDataDaVenda(Date dataDaVenda) {
 		this.dataDaVenda = dataDaVenda;
-	}
-
-	public Funcionario getFuncionario() {
-		return vendedor;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.vendedor = funcionario;
-	}
-
-	public boolean verificarSeOsVendedoresSaoIguais(Funcionario vendedor) {
-		return this.vendedor.equals(vendedor);
-	}
-	
-	public boolean verificarSeOsVendedoresSaoIguais(String nome) {
-		return this.vendedor.verificarSeOsNomesSaoIguais(nome);
 	}
 
 	@Override
@@ -100,8 +83,8 @@ public class Venda {
 
 	@Override
 	public String toString() {
-		return " Venda { \n Data da Venda: " + new DataUtil().formatar(dataDaVenda,"MM/yyyy") + ",\n Valor : " + valorDaVenda + "\n Vendedor : "
-				+ vendedor.getNomeDoFuncionario() + "\n}";
+		return " Venda { \n Data da Venda: " + new DataUtil().formatar(dataDaVenda, "MM/yyyy") + ",\n Valor : "
+				+ valorDaVenda + "\n}";
 	}
 
 }

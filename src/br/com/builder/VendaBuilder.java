@@ -3,7 +3,6 @@ package br.com.builder;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import br.com.model.Funcionario;
 import br.com.model.Venda;
 
 /**
@@ -33,19 +32,6 @@ public class VendaBuilder {
 	 */
 	public VendaBuilder vendaComDataDeCompra(Date dataDaVenda) {
 		venda.setDataDaVenda(dataDaVenda);
-		return this;
-	}
-
-	/**
-	 * 
-	 * Adiciona o vendendor que realizou a venda e retorna o objeto da classe
-	 * VendaBuilder
-	 * 
-	 * @param vendedor
-	 * @return
-	 */
-	public VendaBuilder vendaComVendedor(Funcionario vendedor) {
-		venda.setFuncionario(vendedor);
 		return this;
 	}
 
