@@ -7,6 +7,12 @@ import br.com.dao.VendaDAO;
 import br.com.model.Funcionario;
 import br.com.model.Venda;
 
+/**
+ * 
+ * @author O Javoso
+ *
+ */
+
 public class VendaService implements Serializable {
 
 	private static final long serialVersionUID = 3890870251973431394L;

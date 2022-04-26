@@ -2,6 +2,7 @@ package br.com.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 
@@ -70,14 +71,14 @@ public class Cargo implements Serializable {
 	public void setAdicaoPorTempoDeServico(BigDecimal adicaoPorTempoDeServico) {
 		this.adicaoPorTempoDeServico = adicaoPorTempoDeServico;
 	}
-	
+
 	/**
 	 * Metódo para retornar o valor do salario do funcionario.
 	 * 
 	 * @return
 	 */
 	public BigDecimal getValorDoSalario() {
-		return salario;
+		return salario.add(adicaoPorTempoDeServico.divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP));
 	}
 
 	/**
@@ -88,7 +89,7 @@ public class Cargo implements Serializable {
 	 */
 
 	public BigDecimal getValorDoBeneficio() {
-		return salario.multiply(new BigDecimal(porcentagemBeneficio)).setScale(2, BigDecimal.ROUND_DOWN);
+		return getValorDoSalario().multiply(new BigDecimal(porcentagemBeneficio)).setScale(2, BigDecimal.ROUND_DOWN);
 	}
 
 	/**
@@ -97,8 +98,9 @@ public class Cargo implements Serializable {
 	 * 
 	 * @return
 	 */
+
 	public BigDecimal getValorDoSalarioComBeneficio() {
-		return salario.add(getValorDoBeneficio());
+		return getValorDoSalario().add(getValorDoBeneficio());
 	}
 
 	/**
@@ -111,16 +113,16 @@ public class Cargo implements Serializable {
 	public BigDecimal getValorTotalDeAdicionalPorTempodeServico(int tempoDeServico) {
 		return adicaoPorTempoDeServico.multiply(new BigDecimal(tempoDeServico));
 	}
-	
+
 	/**
-	 * Metódo para calcular o valor total que um funcionario irá receber. 
+	 * Metódo para calcular o valor total que um funcionario irá receber.
+	 * 
 	 * @return
 	 */
 	public BigDecimal valorTotalAReceber() {
 		return getValorDoSalarioComBeneficio().add(adicaoPorTempoDeServico);
 	}
-	
-	
+
 	/**
 	 * 
 	 * Metódo para verificar se o valor do parametro é igual ao nme do cargo
@@ -130,6 +132,16 @@ public class Cargo implements Serializable {
 	 */
 	public boolean verificarSeOsNomesSaoIguais(String nomePesquisa) {
 		return this.nomeCargo.equalsIgnoreCase(nomePesquisa);
+	}
+
+	/**
+	 * 
+	 * Metódo retorna o valor do adicaoPortempoDeServico dividido por mês
+	 * 
+	 * @return
+	 */
+	public BigDecimal valorDoAnoDeServicoEmMes() {
+		return adicaoPorTempoDeServico.divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
 	}
 
 	@Override
@@ -168,11 +180,8 @@ public class Cargo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\n Cargo { " 
-				+ "\n	Cargo  : " + nomeCargo 
-				+ ",\n	Salario : R$ " + salario 
-				+ ",\n	Beneficio : R$ " + getValorDoBeneficio() 
-				+ ",\n	Valor total de tempo de serviço: R$ " + adicaoPorTempoDeServico 
+		return "\n Cargo { " + "\n	Cargo  : " + nomeCargo + ",\n	Salario : R$ " + salario + ",\n	Beneficio : R$ "
+				+ getValorDoBeneficio() + ",\n	Valor total de tempo de serviço: R$ " + adicaoPorTempoDeServico
 				+ "\n   }";
 	}
 

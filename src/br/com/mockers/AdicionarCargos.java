@@ -5,6 +5,11 @@ import java.math.BigDecimal;
 import br.com.builder.CargoBuilder;
 import br.com.service.CargoService;
 
+/**
+ * 
+ * @author O Javoso
+ *
+ */
 public class AdicionarCargos {
 
 	private CargoService service = new CargoService();

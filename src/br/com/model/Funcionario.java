@@ -142,6 +142,18 @@ public class Funcionario {
 	public boolean verificarSeOsNomesSaoIguais(String nome) {
 		return this.nomeDoFuncionario.equalsIgnoreCase(nome);
 	}
+	
+	
+	/**
+	 * 
+	 * Metódo para a calcular o valor total que o funcionario irá receber no mes
+	 * pagamento de suas contas.
+	 * 
+	 * @return
+	 */
+	public BigDecimal valorTotalAReceberPorMes() {
+		return this.cargoDoFuncionario.getValorDoSalarioComBeneficio();
+	}
 
 	@Override
 	public int hashCode() {

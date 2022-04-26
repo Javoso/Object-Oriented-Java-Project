@@ -9,6 +9,12 @@ import java.util.List;
 import br.com.exception.FuncionarioException;
 import br.com.model.Funcionario;
 
+/**
+ * 
+ * @author O Javoso
+ *
+ */
+
 public class FuncionarioDAO {
 
 	private static List<Funcionario> funcionarios;

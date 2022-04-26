@@ -1,10 +1,17 @@
 package br.com.service;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import br.com.dao.CargoDAO;
 import br.com.model.Cargo;
+
+/**
+ * 
+ * @author O Javoso
+ *
+ */
 
 public class CargoService implements Serializable {
 

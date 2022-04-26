@@ -5,6 +5,11 @@ import java.util.List;
 import br.com.dao.FuncionarioDAO;
 import br.com.model.Funcionario;
 
+/**
+ * 
+ * @author O Javoso
+ *
+ */
 public class FuncionarioService {
 
 	public static List<Funcionario> getFuncionarios() {

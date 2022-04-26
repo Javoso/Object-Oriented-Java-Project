@@ -13,6 +13,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+/**
+ * 
+ * @author O Javoso
+ *
+ */
+
 public class DataUtil implements Serializable {
 
 	private static final long serialVersionUID = -5392655117510854021L;

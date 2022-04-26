@@ -23,21 +23,50 @@ public class VendaBuilder {
 		venda = new Venda();
 	}
 
+	/**
+	 * 
+	 * Adiciona a data que a venda foi realizada e retorna o objeto da classe
+	 * VendaBuilder
+	 * 
+	 * @param dataDaVenda
+	 * @return
+	 */
 	public VendaBuilder vendaComDataDeCompra(Date dataDaVenda) {
 		venda.setDataDaVenda(dataDaVenda);
 		return this;
 	}
 
-	public VendaBuilder vendaComVendedor(Funcionario funcionario) {
-		venda.setFuncionario(funcionario);
+	/**
+	 * 
+	 * Adiciona o vendendor que realizou a venda e retorna o objeto da classe
+	 * VendaBuilder
+	 * 
+	 * @param vendedor
+	 * @return
+	 */
+	public VendaBuilder vendaComVendedor(Funcionario vendedor) {
+		venda.setFuncionario(vendedor);
 		return this;
 	}
 
-	public VendaBuilder vendaComValor(BigDecimal salario) {
-		venda.setValorDaVenda(salario.setScale(2, BigDecimal.ROUND_DOWN));
+	/**
+	 * 
+	 * Adiciona o valor da compra e retorna o objeto da classe VendaBuilder
+	 * 
+	 * @param valorDaCompra
+	 * @return
+	 */
+
+	public VendaBuilder vendaComValor(BigDecimal valorDaCompra) {
+		venda.setValorDaVenda(valorDaCompra.setScale(2, BigDecimal.ROUND_DOWN));
 		return this;
 	}
 
+	/**
+	 * Retorna o objeto criado da classe Venda com os valor que foram setados nele.
+	 * 
+	 * @return
+	 */
 	public Venda getNovoVenda() {
 		return venda;
 	}

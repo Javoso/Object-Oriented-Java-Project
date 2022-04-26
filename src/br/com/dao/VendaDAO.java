@@ -11,6 +11,11 @@ import br.com.exception.VendaException;
 import br.com.model.Funcionario;
 import br.com.model.Venda;
 
+/**
+ * 
+ * @author O Javoso
+ *
+ */
 public class VendaDAO {
 
 	private static List<Venda> vendas;
