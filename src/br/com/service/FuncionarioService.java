@@ -6,7 +6,7 @@ import br.com.dao.FuncionarioDAO;
 import br.com.model.Funcionario;
 
 public class FuncionarioService {
-	
+
 	public static List<Funcionario> getFuncionarios() {
 		return FuncionarioDAO.getFuncionarios();
 	}
@@ -18,4 +18,13 @@ public class FuncionarioService {
 	public void listarFuncionarios() {
 		FuncionarioDAO.exibirFuncionarios();
 	}
+
+	public Funcionario findByFuncionario(int index) {
+		return FuncionarioDAO.findByFuncionario(index);
+	}
+
+	public Funcionario findByFuncionario(String nome) {
+		return FuncionarioDAO.findByFuncionario(nome);
+	}
+
 }

@@ -70,6 +70,15 @@ public class Cargo implements Serializable {
 	public void setAdicaoPorTempoDeServico(BigDecimal adicaoPorTempoDeServico) {
 		this.adicaoPorTempoDeServico = adicaoPorTempoDeServico;
 	}
+	
+	/**
+	 * Metódo para retornar o valor do salario do funcionario.
+	 * 
+	 * @return
+	 */
+	public BigDecimal getValorDoSalario() {
+		return salario;
+	}
 
 	/**
 	 * 
@@ -78,7 +87,7 @@ public class Cargo implements Serializable {
 	 * @return
 	 */
 
-	public BigDecimal getValorDoBenecifio() {
+	public BigDecimal getValorDoBeneficio() {
 		return salario.multiply(new BigDecimal(porcentagemBeneficio)).setScale(2, BigDecimal.ROUND_DOWN);
 	}
 
@@ -89,7 +98,7 @@ public class Cargo implements Serializable {
 	 * @return
 	 */
 	public BigDecimal getValorDoSalarioComBeneficio() {
-		return salario.add(getValorDoBenecifio());
+		return salario.add(getValorDoBeneficio());
 	}
 
 	/**
@@ -162,7 +171,7 @@ public class Cargo implements Serializable {
 		return "\n Cargo { " 
 				+ "\n	Cargo  : " + nomeCargo 
 				+ ",\n	Salario : R$ " + salario 
-				+ ",\n	Beneficio : R$ " + getValorDoBenecifio() 
+				+ ",\n	Beneficio : R$ " + getValorDoBeneficio() 
 				+ ",\n	Valor total de tempo de serviço: R$ " + adicaoPorTempoDeServico 
 				+ "\n   }";
 	}

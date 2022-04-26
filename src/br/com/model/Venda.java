@@ -3,6 +3,8 @@ package br.com.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import br.com.util.DataUtil;
+
 /**
  * 
  * Classe model Venda com seu atributos e metódos.
@@ -14,6 +16,7 @@ public class Venda {
 
 	private BigDecimal valorDaVenda;
 	private Date dataDaVenda;
+	private Funcionario vendedor;
 
 	public Venda() {
 	}
@@ -22,30 +25,46 @@ public class Venda {
 	 * 
 	 * Construtor com paramentros para inicializar o objeto.
 	 * 
-	 * @param nomeDoFuncionario
+	 * @param Vendedor
 	 * @param valorDaVenda
 	 * @param dataDaVenda
 	 */
-	public Venda(BigDecimal valorDaVenda, Date dataDaVenda) {
+	public Venda(Funcionario funcionario, BigDecimal valorDaVenda, Date dataDaVenda) {
 		super();
 		this.valorDaVenda = valorDaVenda;
 		this.dataDaVenda = dataDaVenda;
 	}
 
-	public BigDecimal getCargoDoFuncionario() {
+	public BigDecimal getValorDaVenda() {
 		return valorDaVenda;
 	}
 
-	public void setCargoDoFuncionario(BigDecimal valorDaVenda) {
+	public void setValorDaVenda(BigDecimal valorDaVenda) {
 		this.valorDaVenda = valorDaVenda;
 	}
 
-	public Date getDataDaContratacao() {
+	public Date getDataDaVenda() {
 		return dataDaVenda;
 	}
 
-	public void setDataDaContratacao(Date dataDaVenda) {
+	public void setDataDaVenda(Date dataDaVenda) {
 		this.dataDaVenda = dataDaVenda;
+	}
+
+	public Funcionario getFuncionario() {
+		return vendedor;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.vendedor = funcionario;
+	}
+
+	public boolean verificarSeOsVendedoresSaoIguais(Funcionario vendedor) {
+		return this.vendedor.equals(vendedor);
+	}
+	
+	public boolean verificarSeOsVendedoresSaoIguais(String nome) {
+		return this.vendedor.verificarSeOsNomesSaoIguais(nome);
 	}
 
 	@Override
@@ -81,8 +100,8 @@ public class Venda {
 
 	@Override
 	public String toString() {
-		return " Venda { \n Data da Venda: " + dataDaVenda + ",\n Dados do Cargo do Funcionario : " + valorDaVenda
-				+ "\n }";
+		return " Venda { \n Data da Venda: " + new DataUtil().formatar(dataDaVenda,"MM/yyyy") + ",\n Valor : " + valorDaVenda + "\n Vendedor : "
+				+ vendedor.getNomeDoFuncionario() + "\n}";
 	}
 
 }

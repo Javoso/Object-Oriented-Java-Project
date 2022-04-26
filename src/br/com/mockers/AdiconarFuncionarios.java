@@ -61,5 +61,5 @@ public class AdiconarFuncionarios {
 	public void exibirDado() {
 		service.listarFuncionarios();
 	}
-
+	
 }

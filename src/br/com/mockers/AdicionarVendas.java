@@ -1,27 +1,77 @@
 package br.com.mockers;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import br.com.builder.CargoBuilder;
-import br.com.service.CargoService;
+import br.com.builder.VendaBuilder;
+import br.com.model.Funcionario;
+import br.com.model.Venda;
+import br.com.service.FuncionarioService;
+import br.com.service.VendaService;
+import br.com.util.DataUtil;
 
 public class AdicionarVendas {
 
-	private CargoService service = new CargoService();
+	private VendaService service = new VendaService();
+	
+	private FuncionarioService funcionarioService = new FuncionarioService();
 
-	public void adicionarCargos() {
-		service.adicionarCargo(new CargoBuilder().cargoComNome("Secretário").cargoComPorcentagemBeneficio(20)
-				.cargoComSalario(new BigDecimal(7000)).cargoComTaxaDeAnoDeServico(new BigDecimal(1000)).getNovoCargo());
+	public void adicionarVendas() {
 		
-		service.adicionarCargo(new CargoBuilder().cargoComNome("Vendedor").cargoComPorcentagemBeneficio(30)
-				.cargoComSalario(new BigDecimal(12000)).cargoComTaxaDeAnoDeServico(new BigDecimal(1800)).getNovoCargo());
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("12/2021"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva"))
+				.vendaComValor(new BigDecimal(5200)).getNovoVenda());
 		
-		service.adicionarCargo(new CargoBuilder().cargoComNome("Gerente").cargoComPorcentagemBeneficio(0)
-				.cargoComSalario(new BigDecimal(20000)).cargoComTaxaDeAnoDeServico(new BigDecimal(3000)).getNovoCargo());
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("01/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva"))
+				.vendaComValor(new BigDecimal(4000)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("02/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva"))
+				.vendaComValor(new BigDecimal(4200)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("03/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva"))
+				.vendaComValor(new BigDecimal(5850)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("04/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("Ana Silva"))
+				.vendaComValor(new BigDecimal(7000)).getNovoVenda());
+		
+		//===========================================================================================
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("12/2021"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
+				.vendaComValor(new BigDecimal(3400)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("01/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
+				.vendaComValor(new BigDecimal(7700)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("02/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
+				.vendaComValor(new BigDecimal(5000)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("03/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
+				.vendaComValor(new BigDecimal(5900)).getNovoVenda());
+		
+		service.adicionarVenda(new VendaBuilder().vendaComDataDeCompra(new DataUtil().createDateMesAno("04/2022"))
+				.vendaComVendedor(funcionarioService.findByFuncionario("João Mendes"))
+				.vendaComValor(new BigDecimal(6500)).getNovoVenda());
+		
 	}
 	
 	public void exibirDado() {
-		service.listarCargos();
+		service.listarVendas();
+	}
+	
+	public List<Venda> vendasPorFuncionario(Funcionario vendedor){
+		return service.vendaByFuncionario(vendedor);
+	}
+	
+	public List<Venda> vendasPorVendedor(String vendedor){
+		return service.vendaByVendedor(vendedor);
 	}
 
 }

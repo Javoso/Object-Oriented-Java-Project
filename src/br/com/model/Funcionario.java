@@ -61,6 +61,45 @@ public class Funcionario {
 	}
 
 	/**
+	 * Metódo para retornar o valor do salario do funcionario.
+	 * 
+	 * @return
+	 */
+	public BigDecimal getValorDoSalario() {
+		return this.cargoDoFuncionario.getValorDoSalario();
+	}
+
+	/**
+	 * Metódo para verificar se o funcionario tem beneficios.
+	 * 
+	 * @return
+	 */
+	public boolean temNaoBeneficios() {
+		return this.cargoDoFuncionario.getValorDoBeneficio() != BigDecimal.ZERO;
+	}
+
+	/**
+	 * Metódo para retornar o valor total do salario mais o benefecio do
+	 * funcionario.
+	 * 
+	 * @return
+	 */
+	public BigDecimal getValorDoSalarioComBeneficio() {
+		return this.cargoDoFuncionario.getValorDoSalarioComBeneficio();
+	}
+	
+	/**
+	 * Metódo para retornar o valor total do beneficio do
+	 * funcionario.
+	 * 
+	 * @return
+	 */
+	public BigDecimal getValorDoBeneficio() {
+		return this.cargoDoFuncionario.getValorDoBeneficio();
+	}
+
+
+	/**
 	 * Metódo para calcular o valor que o funcionário irá receber com base no tempo
 	 * de servico prestado entre a data de sua contratação e a data que foi passada
 	 * por paramêtro.
@@ -144,7 +183,7 @@ public class Funcionario {
 	@Override
 	public String toString() {
 		return " Funcionario { \n Nome do Funcionario : " + nomeDoFuncionario
-				+ ",\n Data de Contratação do Funcionario : " + dataDaContratacao
+				+ ",\n Data de Contratação do Funcionario : " + new DataUtil().formatar(dataDaContratacao, "MM/yyyy")
 				+ ",\n Dados do Cargo do Funcionario : " + cargoDoFuncionario + "\n }";
 	}
 

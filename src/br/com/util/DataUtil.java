@@ -32,7 +32,7 @@ public class DataUtil implements Serializable {
 		return ca.getTime();
 	}
 
-	public Date createDateMesAno(String data) {
+	public static Date createDateMesAno(String data) {
 		SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 		Date date = null;
 		try {

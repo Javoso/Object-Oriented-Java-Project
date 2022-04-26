@@ -5,61 +5,71 @@ import static java.util.Objects.isNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import br.com.exception.CargoException;
-import br.com.model.Cargo;
+import br.com.exception.VendaException;
+import br.com.model.Funcionario;
+import br.com.model.Venda;
 
 public class VendaDAO {
 
-	private static List<Cargo> cargos;
+	private static List<Venda> vendas;
 
 	public VendaDAO() {
 	}
 
-	public static void addCargo(Cargo cargo) throws CargoException {
-		if (isNull(cargos)) {
-			cargos = new ArrayList<Cargo>();
+	public static void addVenda(Venda venda) throws VendaException {
+		if (isNull(vendas)) {
+			vendas = new ArrayList<Venda>();
 		}
 
-		if (cargos.contains(cargo) && isNull(cargo)) {
-			throw new CargoException("O cargo " + cargo.getNomeCargo() + "Já foi adicionado na lista de cargos.");
+		if (vendas.contains(venda) && isNull(venda)) {
+			throw new VendaException("O venda " + venda + "Já foi adicionado na lista de vendas.");
 		}
 
-		cargos.add(cargo);
-		System.out.println("Cargo adicionado com sucesso");
+		vendas.add(venda);
+		System.out.println("Venda adicionada com sucesso");
 	}
 
-	public static void exibirCargos() {
-		if (getCargos().isEmpty())
-			throw new CargoException("A lista de cargos está vazia!");
+	public static void exibirVendas() {
+		if (getVendas().isEmpty())
+			throw new VendaException("A lista de vendas está vazia!");
 
-		getCargos().forEach(System.out::println);
+		getVendas().forEach(System.out::println);
 	}
 
-	public static List<Cargo> getCargos() {
-		if (!cargos.isEmpty()) {
-			return cargos;
+	public static List<Venda> getVendas() {
+		if (!vendas.isEmpty()) {
+			return vendas;
 		}
 		return Collections.emptyList();
 	}
 
-	public static Cargo findByCargo(int index) {
-		if (getCargos().isEmpty())
-			throw new CargoException("A lista de cargos está vazia!");
+	public static Venda findByVenda(int index) {
+		if (getVendas().isEmpty())
+			throw new VendaException("A lista de vendas está vazia!");
 
-		return getCargos().get(index);
+		return getVendas().get(index);
 	}
 
-	public static Cargo findByCargo(String nome) {
-		if (getCargos().isEmpty())
-			throw new CargoException("A lista de cargos está vazia!");
+	public static List<Venda> vendasByFuncionario(Funcionario funcionario) {
+		if (getVendas().isEmpty())
+			throw new VendaException("A lista de vendas está vazia!");
 
-		return getCargos().stream().filter(cargo -> cargo.verificarSeOsNomesSaoIguais(nome)).findAny()
-				.orElseThrow(() -> new CargoException("Descrição do cargo não encontrado"));
+		return getVendas().stream().filter(venda -> venda.verificarSeOsVendedoresSaoIguais(funcionario))
+				.collect(Collectors.toList());
 	}
 
-	public static void setCargos(List<Cargo> cargos) {
-		VendaDAO.cargos = cargos;
+	public static List<Venda> vendasByFuncionario(String nome) {
+		if (getVendas().isEmpty())
+			throw new VendaException("A lista de vendas está vazia!");
+
+		return getVendas().stream().filter(venda -> venda.verificarSeOsVendedoresSaoIguais(nome))
+				.collect(Collectors.toList());
+	}
+
+	public static void setVendas(List<Venda> vendas) {
+		VendaDAO.vendas = vendas;
 	}
 
 }

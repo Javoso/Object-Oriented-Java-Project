@@ -3,27 +3,36 @@ package br.com.service;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.dao.CargoDAO;
-import br.com.model.Cargo;
+import br.com.dao.VendaDAO;
+import br.com.model.Funcionario;
+import br.com.model.Venda;
 
 public class VendaService implements Serializable {
 
 	private static final long serialVersionUID = 3890870251973431394L;
 
-	public static List<Cargo> getCargos() {
-		return CargoDAO.getCargos();
+	public static List<Venda> getVendas() {
+		return VendaDAO.getVendas();
 	}
 
-	public void adicionarCargo(Cargo cargo) {
-		CargoDAO.addCargo(cargo);
+	public void adicionarVenda(Venda venda) {
+		VendaDAO.addVenda(venda);
 	}
 
-	public void listarCargos() {
-		CargoDAO.exibirCargos();
+	public void listarVendas() {
+		VendaDAO.exibirVendas();
 	}
 
-	public Cargo findByCargo(int index) {
-		return CargoDAO.findByCargo(index);
+	public Venda findByVenda(int index) {
+		return VendaDAO.findByVenda(index);
+	}
+
+	public List<Venda> vendaByFuncionario(Funcionario funcionario) {
+		return VendaDAO.vendasByFuncionario(funcionario);
+	}
+
+	public List<Venda> vendaByVendedor(String nome) {
+		return VendaDAO.vendasByFuncionario(nome);
 	}
 
 }

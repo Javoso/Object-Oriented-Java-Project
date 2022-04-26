@@ -1,12 +1,15 @@
 package br.com.builder;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-import br.com.model.Cargo;
+import br.com.model.Funcionario;
+import br.com.model.Venda;
 
 /**
  * 
- * Classe CargoBuilder é utilizado para a crição de um ou vários objetos com muitas opções possíveis de inicialização.
+ * Classe VendaBuilder é utilizado para a crição de um ou vários objetos com
+ * muitas opções possíveis de inicialização.
  * 
  * @author O Javoso
  *
@@ -14,34 +17,29 @@ import br.com.model.Cargo;
 
 public class VendaBuilder {
 
-	private Cargo cargo;
+	private Venda venda;
 
 	public VendaBuilder() {
-		cargo = new Cargo();
+		venda = new Venda();
 	}
 
-	public VendaBuilder cargoComNome(String nome) {
-		cargo.setNomeCargo(nome);
+	public VendaBuilder vendaComDataDeCompra(Date dataDaVenda) {
+		venda.setDataDaVenda(dataDaVenda);
 		return this;
 	}
 
-	public VendaBuilder cargoComPorcentagemBeneficio(float porcentagem) {
-		cargo.setPorcentagemBeneficio((porcentagem/100));
+	public VendaBuilder vendaComVendedor(Funcionario funcionario) {
+		venda.setFuncionario(funcionario);
 		return this;
 	}
 
-	public VendaBuilder cargoComSalario(BigDecimal salario) {
-		cargo.setSalario(salario.setScale(2, BigDecimal.ROUND_DOWN));
-		return this;
-	}
-	
-	public VendaBuilder cargoComTaxaDeAnoDeServico(BigDecimal valorTaxa) {
-		cargo.setAdicaoPorTempoDeServico(valorTaxa.setScale(2, BigDecimal.ROUND_DOWN));
+	public VendaBuilder vendaComValor(BigDecimal salario) {
+		venda.setValorDaVenda(salario.setScale(2, BigDecimal.ROUND_DOWN));
 		return this;
 	}
 
-	public Cargo getNovoCargo() {
-		return cargo;
+	public Venda getNovoVenda() {
+		return venda;
 	}
 
 }
