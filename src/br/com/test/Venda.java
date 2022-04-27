@@ -30,4 +30,8 @@ public class Venda {
 		this.dataDaVenda = dataDaVenda;
 	}
 
+	public BigDecimal getValorDaVenda(double porcentagemDaVenda) {
+		return valorDaVenda.multiply(new BigDecimal(porcentagemDaVenda)).setScale(2, BigDecimal.ROUND_DOWN);
+	}
+
 }

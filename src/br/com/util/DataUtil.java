@@ -88,7 +88,7 @@ public class DataUtil implements Serializable {
 		return data;
 	}
 
-	public LocalDate asLocalDate(Date date) {
+	public static LocalDate asLocalDate(Date date) {
 		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
@@ -108,7 +108,7 @@ public class DataUtil implements Serializable {
 		return ini.isBefore(fim);
 	}
 
-	public long numeroDeDiasEntreDatas(Date inicio, Date fim) {
+	public static long numeroDeDiasEntreDatas(Date inicio, Date fim) {
 		return ChronoUnit.DAYS.between(asLocalDate(inicio), asLocalDate(fim).plusDays(1));
 	}
 

@@ -42,7 +42,7 @@ public class Cargo {
 	}
 
 	public double getPorcentagemBeneficio() {
-		return porcentagemBeneficio;
+		return porcentagemBeneficio/100;
 	}
 
 	public void setPorcentagemBeneficio(double porcentagemBeneficio) {
