@@ -4,6 +4,7 @@ import java.util.Date;
 
 import br.com.model.Cargo;
 import br.com.model.Funcionario;
+import br.com.model.Venda;
 
 /**
  * Classe FuncionarioBuilder é utilizado para a crição de um objeto com muitas
@@ -58,6 +59,20 @@ public class FuncionarioBuilder {
 
 	public FuncionarioBuilder funcionarioComDataDeContratacao(Date dataDaContratacao) {
 		funcionario.setDataDaContratacao(dataDaContratacao);
+		return this;
+	}
+	
+	/**
+	 * 
+	 * Adiciona uma venda para o funcionario e retorna o objeto da classe
+	 * FuncionarioBuilder
+	 * 
+	 * @param dataDaContratacao
+	 * @return
+	 */
+
+	public FuncionarioBuilder funcionarioComVenda(Venda venda) {
+		funcionario.addVenda(venda);
 		return this;
 	}
 

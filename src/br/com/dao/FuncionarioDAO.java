@@ -33,7 +33,6 @@ public class FuncionarioDAO {
 		}
 
 		funcionarios.add(funcionario);
-		System.out.println("Funcionario adicionado com sucesso");
 	}
 
 	public static void exibirFuncionarios() {
@@ -57,19 +56,19 @@ public class FuncionarioDAO {
 		return getFuncionarios().get(index);
 	}
 
+	public static Funcionario findByFuncionario(String nome) {
+		if (getFuncionarios().isEmpty())
+			throw new FuncionarioException("A lista de funcionarios está vazia!");
+
+		return getFuncionarios().stream().filter(t -> t.getNomeDoFuncionario().equalsIgnoreCase(nome)).findFirst()
+				.get();
+	}
+
 	public static Funcionario findByFuncionario(Funcionario funcionario) {
 		if (getFuncionarios().isEmpty())
 			throw new FuncionarioException("A lista de funcionarios está vazia!");
 
 		return getFuncionarios().get(getFuncionarios().indexOf(funcionario));
-	}
-
-	public static Funcionario findByFuncionario(String nome) {
-		if (getFuncionarios().isEmpty())
-			throw new FuncionarioException("A lista de funcionarios está vazia!");
-
-		return getFuncionarios().stream().filter(funcionario -> funcionario.verificarSeOsNomesSaoIguais(nome)).findAny()
-				.orElseThrow(() -> new FuncionarioException("Descrição do funcionario não encontrado"));
 	}
 
 	public static void setFuncionarios(List<Funcionario> funcionarios) {

@@ -43,7 +43,6 @@ public class CargoDAO {
 		}
 
 		cargos.add(cargo);
-		System.out.println("Cargo adicionado com sucesso");
 	}
 
 	/**
@@ -92,21 +91,6 @@ public class CargoDAO {
 		return getCargos().get(index);
 	}
 
-	/**
-	 * 
-	 * O Metodo utilizado para buscar um cargo pelo seu nome na lista que está em
-	 * memoria.
-	 * 
-	 * @param nome
-	 * @return
-	 */
-	public static Cargo findByCargo(String nome) {
-		if (getCargos().isEmpty())
-			throw new CargoException("A lista de cargos está vazia!");
-
-		return getCargos().stream().filter(cargo -> cargo.verificarSeOsNomesSaoIguais(nome)).findAny()
-				.orElseThrow(() -> new CargoException("Descrição do cargo não encontrado"));
-	}
 
 	/**
 	 * 

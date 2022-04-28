@@ -33,7 +33,6 @@ public class VendaDAO {
 
 		vendas.add(venda);
 		funcionario.getVendas().add(venda);
-		System.out.println("Venda adicionada com sucesso");
 	}
 
 	public static void exibirVendas() {

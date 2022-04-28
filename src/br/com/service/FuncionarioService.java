@@ -31,9 +31,9 @@ public class FuncionarioService {
 	public Funcionario findByFuncionario(Funcionario funcionario) {
 		return FuncionarioDAO.findByFuncionario(funcionario);
 	}
-
-	public Funcionario findByFuncionario(String nome) {
-		return FuncionarioDAO.findByFuncionario(nome);
+	
+	public Funcionario findByFuncionario(String funcionario) {
+		return FuncionarioDAO.findByFuncionario(funcionario);
 	}
 
 }

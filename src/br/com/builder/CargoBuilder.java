@@ -66,7 +66,7 @@ public class CargoBuilder {
 	 * @return
 	 */
 	public CargoBuilder cargoComTaxaDeAnoDeServico(BigDecimal valorTaxa) {
-		cargo.setAdicaoPorTempoDeServico(valorTaxa.setScale(2, BigDecimal.ROUND_DOWN));
+		cargo.setValorDeAbonoAnual(valorTaxa.setScale(2, BigDecimal.ROUND_DOWN));
 		return this;
 	}
 

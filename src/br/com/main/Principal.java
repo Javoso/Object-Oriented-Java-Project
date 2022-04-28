@@ -1,16 +1,11 @@
 package br.com.main;
 
-import static br.com.service.FuncionarioService.getFuncionarios;
-import static br.com.util.DataUtil.createDateMesAno;
-import static br.com.util.VerificadorUtil.retornarOValorTotalPagoDeSalarioComBeneficioNoMes;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import br.com.mockers.AdicionarCargos;
 import br.com.mockers.AdicionarVendas;
 import br.com.mockers.AdiconarFuncionarios;
-import br.com.model.Funcionario;
+import br.com.service.FuncionarioService;
+import br.com.util.DataUtil;
+import br.com.util.VerificadorUtil;
 
 public class Principal {
 
@@ -20,34 +15,52 @@ public class Principal {
 		AdicionarVendas av = new AdicionarVendas();
 
 		ac.adicionarCargos();
-		ac.exibirDado();
+		//ac.exibirDado();
 
 		af.adicionarFuncionarios();
-		af.exibirDado();
+		//af.exibirDado();
 
 		av.adicionarVendas();
+
+		System.err.println("INICIO DO PRIMEIRO MÉTODO ");
+		VerificadorUtil.retornarOValorTotalPagoDeSalarioComBeneficioNoMes(FuncionarioService.getFuncionarios(),
+				DataUtil.createDateMesAno("04/2022"));
+		System.err.println("TÉRMINO DO PRIMEIRO MÉTODO ");
+		System.out.println("\n");
 		
-		// av.exibirDado();
-
-		// av.vendasPorVendedor("Jorge Carvalho").forEach(System.out::println);
-		// av.vendasPorVendedor("Maria Souza ").forEach(System.out::println);
-		// av.vendasPorVendedor("Ana Silva").forEach(System.out::println);
-		// av.vendasPorVendedor("João Mendes").forEach(System.out::println);
-		// av.vendasPorVendedor("Juliana Alves ").forEach(System.out::println);
-		// av.vendasPorVendedor("Bento Albino").forEach(System.out::println);
-
-		List<Funcionario> funcionariosSemBeneficios = getFuncionarios().stream().filter(func -> func.temNaoBeneficios())
-				.collect(Collectors.toList());
-
-		System.out.println("O Valor da soma do salario é: R$"
-				+ retornarOValorTotalPagoDeSalarioComBeneficioNoMes(getFuncionarios(), createDateMesAno("05/2022")));
-
-//		System.out.println("O Valor da soma do salario com os beneficios é: R$"
-//				+ retornarSomenteOTotalPagoEmSalariosNoMes(getFuncionarios(), createDateMesAno("01/2022")));
-//
-//		System.out.println("A soma do valor recebido pelos funcionarios que tem beneficios é: R$"
-//				+ retornarSomenteOsFuncionariosQueRecebemBeneficioEOTotalPagoEmBeneficiosNoMes(
-//						funcionariosSemBeneficios, createDateMesAno("01/2022")));
+		
+		System.err.println("INICIO DO SEGUNDO MÉTODO ");
+		VerificadorUtil.retornarSomenteOTotalPagoEmSalariosNoMes(FuncionarioService.getFuncionarios(),
+				DataUtil.createDateMesAno("04/2022"));
+		System.err.println("TÉRMINO DO SEGUNDO MÉTODO ");
+		System.out.println("\n");
+		
+		
+		System.err.println("TERCEIRO MÉTODO ");
+		VerificadorUtil.retornarSomenteOsFuncionariosQueRecebemBeneficioEOTotalPagoEmBeneficiosNoMes(
+				FuncionarioService.getFuncionarios(), DataUtil.createDateMesAno("04/2022"));
+		System.err.println("TÉRMINO DO TERCEIRO MÉTODO ");
+		System.out.println("\n");
+		
+		
+		System.err.println("QUARTO MÉTODO ");
+		VerificadorUtil.retornarSomenteOFuncionarioQueRecebeuOValorMaisAltoNoMes(FuncionarioService.getFuncionarios(),
+				DataUtil.createDateMesAno("04/2022"));
+		System.err.println("TÉRMINO DO QUARTO MÉTODO ");
+		System.out.println("\n");
+		
+		
+		System.err.println("QUINTO MÉTODO ");
+		VerificadorUtil.retornarSomenteOFuncionarioQueRecebeuOValorMaisAltoEmBEneficiosNoMes(
+				FuncionarioService.getFuncionarios(), DataUtil.createDateMesAno("04/2022"));
+		System.err.println("TÉRMINO DO QUINTO MÉTODO ");
+		System.out.println("\n");
+		
+		
+		System.err.println("SEXTO MÉTODO ");
+		VerificadorUtil.retornarSomenteOFuncionarioQueVendeuMaisNoMes(FuncionarioService.getFuncionarios(),
+				DataUtil.createDateMesAno("04/2022"));
+		System.err.println("TÉRMINO DO SEXTO MÉTODO ");
 
 	}
 }

@@ -1,12 +1,13 @@
 package br.com.model;
 
-import static java.util.Objects.isNull;
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import br.com.exception.VendaException;
 import br.com.util.DataUtil;
 
 /**
@@ -16,15 +17,14 @@ import br.com.util.DataUtil;
  * @author O Javoso
  *
  */
-public class Funcionario {
 
+public class Funcionario implements Serializable {
+
+	private static final long serialVersionUID = 2154476051935899931L;
 	private String nomeDoFuncionario;
 	private Cargo cargoDoFuncionario;
 	private Date dataDaContratacao;
-	private List<Venda> vendas;
-
-	public Funcionario() {
-	}
+	private List<Venda> vendas = new ArrayList<Venda>();
 
 	/**
 	 * Construtor com paramentros para inicializar o objeto.
@@ -34,14 +34,13 @@ public class Funcionario {
 	 * @param dataDaContratacao
 	 * @param vendas
 	 */
-
-	public Funcionario(String nomeDoFuncionario, Cargo cargoDoFuncionario, Date dataDaContratacao, List<Venda> vendas) {
-		super();
+	public Funcionario(String nomeDoFuncionario, Cargo cargoDoFuncionario, Date dataDaContratacao) {
 		this.nomeDoFuncionario = nomeDoFuncionario;
 		this.cargoDoFuncionario = cargoDoFuncionario;
 		this.dataDaContratacao = dataDaContratacao;
-		this.vendas = vendas;
 	}
+	
+	public Funcionario() {}
 
 	public String getNomeDoFuncionario() {
 		return nomeDoFuncionario;
@@ -68,8 +67,6 @@ public class Funcionario {
 	}
 
 	public List<Venda> getVendas() {
-		if (isNull(vendas))
-			vendas = new ArrayList<>();
 		return vendas;
 	}
 
@@ -77,45 +74,138 @@ public class Funcionario {
 		this.vendas = vendas;
 	}
 
-	public void adicionarVendaAoFuncionario(Venda venda) {
-
+	public Funcionario addVenda(Venda venda) {
+		this.vendas.add(venda);
+		return this;
 	}
 
 	/**
-	 * Metódo para retornar o valor do salario do funcionario.
 	 * 
+	 * Metódo para a listar os dados referentes aos funcionarios.
+	 * 
+	 * @param dataMesAndAno
 	 * @return
+	 * @throws Exception
 	 */
-	public BigDecimal getValorDoSalario() {
-		return this.cargoDoFuncionario.getValorDoSalario();
-	}
 
-	/**
-	 * Metódo para verificar se o funcionario tem beneficios.
-	 * 
-	 * @return
-	 */
-	public boolean temNaoBeneficios() {
-		return this.cargoDoFuncionario.getValorDoBeneficio() != BigDecimal.ZERO;
+	public String listar(Date dataMesAndAno) throws Exception {
+		return new StringBuilder()
+				.append("{ \n")
+				.append("NOME: ").append(getNomeDoFuncionario())
+				.append("\n")
+				.append("CARGO: ").append(getCargoDoFuncionario().getNomeCargo())
+				.append("\n")
+				.append("BENEFICIO: ").append((getCargoDoFuncionario().getPorcentagemBeneficio() * 100) + "%")
+				.append("\n")
+				.append("SALARIO: ").append(getCargoDoFuncionario().getSalario())
+				.append("\n")
+				.append("ABONO: ").append(getCargoDoFuncionario().getValorDeAbonoAnual())
+				.append("\n")
+				.append("DATA DE CONTRATO: ").append(DataUtil.formatar(this.getDataDaContratacao(), "MM/yyyy"))
+				.append("\n")
+				.append("VALOR DO SALARIO: ").append(this.calcularValorDoSalario(dataMesAndAno))
+				.append("\n")
+				.append("VALOR DO BENEFICIOS: ").append(this.calcularValorDoBeneficio(dataMesAndAno))
+				.append("\n")
+				.append("VALOR DAS VENDAS: ").append(this.totalValorRecebidoPorVendas(dataMesAndAno))
+				.append("\n")
+				.append("VALOR TOTAL A RECEBER POR TEMPO DE SERVIÇO: ").append(this.totalDeBonusPorTempoDeServico(dataMesAndAno))
+				.append("\n")
+				.append("TOTAL DO PAGO AO FUNCIONARIO: ").append(this.totalASerPago(dataMesAndAno))
+				.append("\n }")
+				.toString();
 	}
 
 	/**
 	 * Metódo para retornar o valor total do salario mais o benefecio do
 	 * funcionario.
 	 * 
+	 * @param dataMesAndAno
 	 * @return
 	 */
-	public BigDecimal getValorDoSalarioComBeneficio() {
-		return this.cargoDoFuncionario.getValorDoSalarioComBeneficio();
+
+	public BigDecimal totalASerPago(Date dataMesAndAno) {
+		return this.calcularValorDoSalario(dataMesAndAno).add(calcularValorDoBeneficio(dataMesAndAno));
+	}
+
+	/**
+	 * Metódo para retornar o valor do salario do funcionario.
+	 * 
+	 * @param dataMesAndAno
+	 * @return
+	 */
+
+	public BigDecimal calcularValorDoSalario(Date dataMesAndAno) {
+		return this.cargoDoFuncionario.getSalario().add(totalDeBonusPorTempoDeServico(dataMesAndAno));
 	}
 
 	/**
 	 * Metódo para retornar o valor total do beneficio do funcionario.
 	 * 
+	 * @param dataMesAndAno
 	 * @return
 	 */
-	public BigDecimal getValorDoBeneficio() {
-		return this.cargoDoFuncionario.getValorDoBeneficio();
+	public BigDecimal calcularValorDoBeneficio(Date dataMesAndAno) {
+		if (this.cargoDoFuncionario.isSecretario()) {
+			return calcularValorBeneficioSecretario(dataMesAndAno);
+		} else if (this.cargoDoFuncionario.isVendendor()) {
+			return calcularValorBeneficioVendedor(dataMesAndAno);
+		} else {
+			return calcularValorBeneficioGerente(dataMesAndAno);
+		}
+
+	}
+
+	/**
+	 * 
+	 * Método para realizar o calculo do valor referente ao beneficio que o vendedor
+	 * irá receber
+	 * 
+	 * @param dataMesAndAno
+	 * @return
+	 */
+	public BigDecimal calcularValorBeneficioVendedor(Date dataMesAndAno) {
+		if (!verificaSeTemVenda(dataMesAndAno))
+			return new BigDecimal(0);
+
+		return totalValorRecebidoPorVendas(dataMesAndAno);
+	}
+
+	/**
+	 * 
+	 * Método para realizar o calculo do valor referente ao beneficio que o
+	 * secretário irá receber
+	 * 
+	 * @param dataMesAndAno
+	 * @return
+	 */
+
+	public BigDecimal calcularValorBeneficioSecretario(Date dataMesAndAno) {
+		return calcularValorDoSalario(dataMesAndAno).add(valorBeneficioSobreSalario(dataMesAndAno));
+	}
+
+	/**
+	 * 
+	 * Método para realizar o calculo do valor referente ao beneficio que o gerente
+	 * irá receber
+	 * 
+	 * @param dataMesAndAno
+	 * @return
+	 */
+	public BigDecimal calcularValorBeneficioGerente(Date dataMesAndAno) {
+		return calcularValorDoSalario(dataMesAndAno);
+	}
+
+	/**
+	 * 
+	 * Método para verificar se o funcionario tem alguma venda.
+	 * 
+	 * @param dataMesAndAno
+	 * @return
+	 */
+	public boolean verificaSeTemVenda(Date dataMesAndAno) {
+		boolean a = this.vendas.stream().anyMatch(venda -> venda.compararData(dataMesAndAno));
+		return a;
 	}
 
 	/**
@@ -123,104 +213,65 @@ public class Funcionario {
 	 * de servico prestado entre a data de sua contratação e a data que foi passada
 	 * por paramêtro.
 	 * 
-	 * @param dataAtual
+	 * @param dataMesAndAno
 	 */
-	public void calcularValorAdicionalDoTempoDeServico(Date dataAtual) {
-		this.cargoDoFuncionario.getValorTotalDeAdicionalPorTempodeServico(calcularTempoDeServico(dataAtual));
+	public BigDecimal totalDeBonusPorTempoDeServico(Date dataMesAndAno) {
+		long tempoEmAnoDeTrabalho = DataUtil.numeroDeAnosEntreDatas(this.dataDaContratacao, dataMesAndAno);
+
+		return this.cargoDoFuncionario.getValorDeAbonoAnual()
+				.multiply(new BigDecimal(tempoEmAnoDeTrabalho > 0 ? tempoEmAnoDeTrabalho : 0));
+
 	}
 
 	/**
 	 * 
-	 * Metódo para a calcular o valor total que o funcionario irá receber no
-	 * pagamento de suas contas.
+	 * Método para realizar o calculo do valor referente ao beneficio que o
+	 * funcionario irá receber encima do seu salario.
 	 * 
-	 * @return
-	 */
-	public BigDecimal valorTotalAReceber() {
-		return this.cargoDoFuncionario.valorTotalAReceber();
-	}
-
-	/**
-	 * Metódo para compara o tempo de trabalho do funcionario em anos.
-	 * 
-	 * @param dataAtual
+	 * @param dataMesAndAno
 	 * @return
 	 */
 
-	public int calcularTempoDeServico(Date dataAtual) {
-		return new DataUtil().qtdAnosEntreDatas(dataDaContratacao, dataAtual);
+	public BigDecimal valorBeneficioSobreSalario(Date dataMesAndAno) {
+		return calcularValorDoSalario(dataMesAndAno)
+				.multiply(new BigDecimal(this.cargoDoFuncionario.getPorcentagemBeneficio()))
+				.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 
 	/**
 	 * 
-	 * Metodo para verificar se o valor paramentro é igual ao nme do funcionario.
+	 * Método para realizar o calculo do valor que o vendedor irá receber pela sua
+	 * vendas
 	 * 
-	 * @param nome
+	 * @param dataMesAndAno
 	 * @return
+	 * @throws VendaException
 	 */
-	public boolean verificarSeOsNomesSaoIguais(String nome) {
-		return this.nomeDoFuncionario.equalsIgnoreCase(nome);
-	}
 
-	/**
-	 * 
-	 * Metódo para a calcular o valor total que o funcionario irá receber no mes
-	 * pagamento de suas contas.
-	 * 
-	 * @return
-	 */
-	public BigDecimal valorTotalAReceberPorMes() {
-		return this.cargoDoFuncionario.getValorDoSalarioComBeneficio();
-	}
+	public BigDecimal totalValorRecebidoPorVendas(Date dataMesAndAno) throws VendaException {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cargoDoFuncionario == null) ? 0 : cargoDoFuncionario.hashCode());
-		result = prime * result + ((dataDaContratacao == null) ? 0 : dataDaContratacao.hashCode());
-		result = prime * result + ((nomeDoFuncionario == null) ? 0 : nomeDoFuncionario.hashCode());
-		result = prime * result + ((vendas == null) ? 0 : vendas.hashCode());
-		return result;
-	}
+		if (this.cargoDoFuncionario.getNomeCargo().equalsIgnoreCase("VENDEDOR")) {
+			if (!verificaSeTemVenda(dataMesAndAno))
+				return new BigDecimal(0);
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		if (cargoDoFuncionario == null) {
-			if (other.cargoDoFuncionario != null)
-				return false;
-		} else if (!cargoDoFuncionario.equals(other.cargoDoFuncionario))
-			return false;
-		if (dataDaContratacao == null) {
-			if (other.dataDaContratacao != null)
-				return false;
-		} else if (!dataDaContratacao.equals(other.dataDaContratacao))
-			return false;
-		if (nomeDoFuncionario == null) {
-			if (other.nomeDoFuncionario != null)
-				return false;
-		} else if (!nomeDoFuncionario.equals(other.nomeDoFuncionario))
-			return false;
-		if (vendas == null) {
-			if (other.vendas != null)
-				return false;
-		} else if (!vendas.equals(other.vendas))
-			return false;
-		return true;
+			List<Venda> vendaUtil = vendas.stream().filter(venda -> venda.getDataDaVenda().equals(dataMesAndAno))
+					.collect(Collectors.toList());
+
+			return vendaUtil.stream().map(venda -> venda.getValorDaVenda(cargoDoFuncionario.getPorcentagemBeneficio()))
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		} else {
+			return new BigDecimal(0);
+		}
+
 	}
 
 	@Override
 	public String toString() {
-		return " Funcionario { \n Nome do Funcionario : " + nomeDoFuncionario
-				+ ",\n Data de Contratação do Funcionario : " + new DataUtil().formatar(dataDaContratacao, "MM/yyyy")
-				+ ",\n Dados do Cargo do Funcionario : " + cargoDoFuncionario + "\n }";
+		return "Funcionario [ NOME = " + nomeDoFuncionario + ", CARGO =" + cargoDoFuncionario
+				+ ", DATA DE CONTRATAÇÃO =" +  DataUtil.formatar(dataDaContratacao, "MM/yyyy") + ", VENDAS =" + vendas + "]";
 	}
+	
+	
 
 }

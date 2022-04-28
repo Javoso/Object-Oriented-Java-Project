@@ -1,43 +1,29 @@
 package br.com.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-/**
- * 
- * Classe model Cargo com seu atributos e metódos.
- * 
- * @author O Javoso
- *
- */
-
-public class Cargo implements Serializable {
-
-	private static final long serialVersionUID = 6124196597928727345L;
+public class Cargo {
 
 	private String nomeCargo;
 	private BigDecimal salario;
-	private BigDecimal adicaoPorTempoDeServico;
-	private float porcentagemBeneficio;
+	private double porcentagemBeneficio;
+	private BigDecimal valorDeAbonoAnual;	
 
-	public Cargo() {
-	}
+	public Cargo() {}
 
-	/**
-	 * Construtor com paramentros para inicializar o objeto.
-	 * 
-	 * @param nomeCargo
-	 * @param salario
-	 * @param adicaoPorTempoDeServico
-	 * @param porcentagemBeneficio
-	 */
-	public Cargo(String nomeCargo, BigDecimal salario, BigDecimal adicaoPorTempoDeServico, float porcentagemBeneficio) {
-		super();
+	public Cargo(String nomeCargo, BigDecimal salario, double porcentagemBeneficio, BigDecimal valorDeAbonoAnual) {
 		this.nomeCargo = nomeCargo;
 		this.salario = salario;
-		this.adicaoPorTempoDeServico = adicaoPorTempoDeServico;
 		this.porcentagemBeneficio = porcentagemBeneficio;
+		this.valorDeAbonoAnual = valorDeAbonoAnual;
+	}
+
+	public BigDecimal getValorDeAbonoAnual() {
+		return valorDeAbonoAnual;
+	}
+
+	public void setValorDeAbonoAnual(BigDecimal valorDeAbonoAnual) {
+		this.valorDeAbonoAnual = valorDeAbonoAnual;
 	}
 
 	public String getNomeCargo() {
@@ -49,140 +35,72 @@ public class Cargo implements Serializable {
 	}
 
 	public BigDecimal getSalario() {
-		return salario.setScale(2, BigDecimal.ROUND_DOWN);
+		return salario;
 	}
 
 	public void setSalario(BigDecimal salario) {
 		this.salario = salario;
 	}
 
-	public float getPorcentagemBeneficio() {
-		return porcentagemBeneficio;
+	public double getPorcentagemBeneficio() {
+		return porcentagemBeneficio / 100;
 	}
 
-	public void setPorcentagemBeneficio(float porcentagemBeneficio) {
+	public void setPorcentagemBeneficio(double porcentagemBeneficio) {
 		this.porcentagemBeneficio = porcentagemBeneficio;
 	}
 
-	public BigDecimal getAdicaoPorTempoDeServico() {
-		return adicaoPorTempoDeServico.setScale(2, BigDecimal.ROUND_DOWN);
-	}
-
-	public void setAdicaoPorTempoDeServico(BigDecimal adicaoPorTempoDeServico) {
-		this.adicaoPorTempoDeServico = adicaoPorTempoDeServico;
-	}
-
 	/**
-	 * Metódo para retornar o valor do salario do funcionario.
+	 * Metódo para verificar se o funcionario tem beneficios.
 	 * 
 	 * @return
 	 */
-	public BigDecimal getValorDoSalario() {
-		return salario.add(adicaoPorTempoDeServico.divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP));
+	
+	public boolean temBeneficio() {
+		return this.porcentagemBeneficio != 0;
 	}
-
+	
+	
 	/**
-	 * 
-	 * Metódo para retornar o valor total do benefecio do funcionario.
+	 * Metódo para verificar se o funcionario tem beneficios.
 	 * 
 	 * @return
 	 */
-
-	public BigDecimal getValorDoBeneficio() {
-		return getValorDoSalario().multiply(new BigDecimal(porcentagemBeneficio)).setScale(2, BigDecimal.ROUND_DOWN);
+	public boolean naoTemBeneficio() {
+		return !temBeneficio();
 	}
-
+	
 	/**
-	 * Metódo para retornar o valor total do salario mais o benefecio do
-	 * funcionario.
+	 * Metódo para verificar se o funcionario é um vendedor.
 	 * 
 	 * @return
 	 */
-
-	public BigDecimal getValorDoSalarioComBeneficio() {
-		return getValorDoSalario().add(getValorDoBeneficio());
+	public boolean isVendendor() {
+		return this.nomeCargo.equalsIgnoreCase("VENDEDOR");
 	}
-
 	/**
-	 * Metódo para calcular o valor que funcionario ira receber pelo seu tempo de
-	 * serviço deste sua contratação até a data de sua demissão.
-	 * 
-	 * @param tempoDeServico
-	 * @return
-	 */
-	public BigDecimal getValorTotalDeAdicionalPorTempodeServico(int tempoDeServico) {
-		return adicaoPorTempoDeServico.multiply(new BigDecimal(tempoDeServico));
-	}
-
-	/**
-	 * Metódo para calcular o valor total que um funcionario irá receber.
+	 * Metódo para verificar se o funcionario é um secretário.
 	 * 
 	 * @return
 	 */
-	public BigDecimal valorTotalAReceber() {
-		return getValorDoSalarioComBeneficio().add(adicaoPorTempoDeServico);
+	public boolean isSecretario() {
+		return this.nomeCargo.equalsIgnoreCase("SECRETARIO");
 	}
-
 	/**
-	 * 
-	 * Metódo para verificar se o valor do parametro é igual ao nme do cargo
-	 * 
-	 * @param nomePesquisa
-	 * @return
-	 */
-	public boolean verificarSeOsNomesSaoIguais(String nomePesquisa) {
-		return this.nomeCargo.equalsIgnoreCase(nomePesquisa);
-	}
-
-	/**
-	 * 
-	 * Metódo retorna o valor do adicaoPortempoDeServico dividido por mês
+	 * Metódo para verificar se o funcionario tem gerente.
 	 * 
 	 * @return
 	 */
-	public BigDecimal valorDoAnoDeServicoEmMes() {
-		return adicaoPorTempoDeServico.divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nomeCargo == null) ? 0 : nomeCargo.hashCode());
-		result = prime * result + Float.floatToIntBits(porcentagemBeneficio);
-		result = prime * result + ((salario == null) ? 0 : salario.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cargo other = (Cargo) obj;
-		if (nomeCargo == null) {
-			if (other.nomeCargo != null)
-				return false;
-		} else if (!nomeCargo.equals(other.nomeCargo))
-			return false;
-		if (Float.floatToIntBits(porcentagemBeneficio) != Float.floatToIntBits(other.porcentagemBeneficio))
-			return false;
-		if (salario == null) {
-			if (other.salario != null)
-				return false;
-		} else if (!salario.equals(other.salario))
-			return false;
-		return true;
+	public boolean isGerente() {
+		return this.nomeCargo.equalsIgnoreCase("GERENTE");
 	}
 
 	@Override
 	public String toString() {
-		return "\n Cargo { " + "\n	Cargo  : " + nomeCargo + ",\n	Salario : R$ " + salario + ",\n	Beneficio : R$ "
-				+ getValorDoBeneficio() + ",\n	Valor total de tempo de serviço: R$ " + adicaoPorTempoDeServico
-				+ "\n   }";
+		return "Cargo [ NOME = " + nomeCargo + ", SALARIO = " + salario + ", PORCENTAGEM DO BENEFICIOS = "
+				+ porcentagemBeneficio + ", VALOR DO ABONO ANUAL = " + valorDeAbonoAnual + "]";
 	}
+	
+	
 
 }

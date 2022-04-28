@@ -23,7 +23,7 @@ public class DataUtil implements Serializable {
 
 	private static final long serialVersionUID = -5392655117510854021L;
 
-	public String formatar(Date data, String formato) {
+	public static String formatar(Date data, String formato) {
 		return new SimpleDateFormat(formato).format(data);
 	}
 
@@ -112,12 +112,12 @@ public class DataUtil implements Serializable {
 		return ChronoUnit.DAYS.between(asLocalDate(inicio), asLocalDate(fim).plusDays(1));
 	}
 
-	public long numeroDeMesesEntreDatas(Date inicio, Date fim) {
+	public static long numeroDeMesesEntreDatas(Date inicio, Date fim) {
 		return ChronoUnit.MONTHS.between(asLocalDate(inicio), asLocalDate(fim).plusMonths(1));
 	}
 
-	public long numeroDeAnosEntreDatas(Date hoje, Date futuro) {
-		return ChronoUnit.YEARS.between(asLocalDate(hoje), asLocalDate(futuro).plusYears(1));
+	public static long numeroDeAnosEntreDatas(Date hoje, Date futuro) {
+		return ChronoUnit.YEARS.between(asLocalDate(hoje), asLocalDate(futuro));
 	}
 
 	public Date getPrimeiroDiaSemestreAtual() {

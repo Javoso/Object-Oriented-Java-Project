@@ -5,30 +5,14 @@ import java.util.Date;
 
 import br.com.util.DataUtil;
 
-/**
- * 
- * Classe model Venda com seu atributos e metódos.
- * 
- * @author O Javoso
- *
- */
 public class Venda {
 
 	private BigDecimal valorDaVenda;
 	private Date dataDaVenda;
+	
+	public Venda() {}
 
-	public Venda() {
-	}
-
-	/**
-	 * 
-	 * Construtor com paramentros para inicializar o objeto.
-	 * 
-	 * @param Vendedor
-	 * @param valorDaVenda
-	 * @param dataDaVenda
-	 */
-	public Venda(Funcionario funcionario, BigDecimal valorDaVenda, Date dataDaVenda) {
+	public Venda(BigDecimal valorDaVenda, Date dataDaVenda) {
 		super();
 		this.valorDaVenda = valorDaVenda;
 		this.dataDaVenda = dataDaVenda;
@@ -49,13 +33,35 @@ public class Venda {
 	public void setDataDaVenda(Date dataDaVenda) {
 		this.dataDaVenda = dataDaVenda;
 	}
+	
+	/**
+	 * 
+	 * Metódo para calcular o valor que o vendedor irá receber encima dessa venda.
+	 * 
+	 * @param porcentagemDaVenda
+	 * @return
+	 */
+
+	public BigDecimal getValorDaVenda(double porcentagemDaVenda) {
+		return valorDaVenda.multiply(new BigDecimal(porcentagemDaVenda)).setScale(2, BigDecimal.ROUND_HALF_UP);
+	}
+	/**
+	 * 
+	 * Metódo para comparar se a data informar é igual a data da venda.
+	 * 
+	 * @param dataMesAndAno
+	 * @return
+	 */
+	public boolean compararData(Date dataMesAndAno) {
+		return this.dataDaVenda.compareTo(dataMesAndAno) == 0;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((valorDaVenda == null) ? 0 : valorDaVenda.hashCode());
 		result = prime * result + ((dataDaVenda == null) ? 0 : dataDaVenda.hashCode());
+		result = prime * result + ((valorDaVenda == null) ? 0 : valorDaVenda.hashCode());
 		return result;
 	}
 
@@ -68,23 +74,24 @@ public class Venda {
 		if (getClass() != obj.getClass())
 			return false;
 		Venda other = (Venda) obj;
-		if (valorDaVenda == null) {
-			if (other.valorDaVenda != null)
-				return false;
-		} else if (!valorDaVenda.equals(other.valorDaVenda))
-			return false;
 		if (dataDaVenda == null) {
 			if (other.dataDaVenda != null)
 				return false;
 		} else if (!dataDaVenda.equals(other.dataDaVenda))
+			return false;
+		if (valorDaVenda == null) {
+			if (other.valorDaVenda != null)
+				return false;
+		} else if (!valorDaVenda.equals(other.valorDaVenda))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return " Venda { \n Data da Venda: " + new DataUtil().formatar(dataDaVenda, "MM/yyyy") + ",\n Valor : "
-				+ valorDaVenda + "\n}";
+		return "Venda [VALOR = " + valorDaVenda + ", DATA DA VENDA = " + DataUtil.formatar(dataDaVenda, "MM/yyyy") + "]";
 	}
+	
+	
 
 }

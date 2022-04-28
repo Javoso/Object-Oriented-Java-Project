@@ -5,8 +5,8 @@ import java.util.List;
 
 import br.com.builder.VendaBuilder;
 import br.com.model.Funcionario;
-import br.com.model.Venda;
 import br.com.service.FuncionarioService;
+import br.com.model.Venda;
 import br.com.service.VendaService;
 import br.com.util.DataUtil;
 
